@@ -38,7 +38,7 @@ def handle_message(event):
     #echo
     msg = event.message.text
     if (msg in msg_list):
-        message = TextSendMessage(original_content_url=scratch_CWA(),preview_image_url=scratch_CWA())
+        message = TextSendMessage(type = 'image',original_content_url="https://www.cwa.gov.tw/Data/fcst_img/FI04.png",preview_image_url="https://www.cwa.gov.tw/Data/fcst_img/FI04.png")
         line_bot_api.reply_message(event.reply_token,message)
     return
     
