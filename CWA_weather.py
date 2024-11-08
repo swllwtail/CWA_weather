@@ -8,33 +8,24 @@ import os
 
 app = Flask(__name__)
 
-msg_list = ['gym','人數','健嗎','gym ','Gym ','Gym']
+msg_list = ['Weather ','weather','weather ','天氣圖','map','Map ']
 line_bot_api = LineBotApi(os.environ['CHANNEL_ACCESS_TOKEN'])
 handler = WebhookHandler(os.environ['CHANNEL_SECRET'])
 
-def crawl_gym ():
+def crawl_CWA ():
 
     # 設定要爬取的網址
-    url = 'https://rent.pe.ntu.edu.tw'  # 替換成你想要爬取的網址
+    url = 'https://www.cwa.gov.tw/Data/fcst_img/FI04.png'  # 替換成你想要爬取的網址
 
     # 發送 GET 請求
     response = requests.get(url)
 
     # 確認請求是否成功
     if response.status_code == 200:
-        # 解析 HTML 內容
-        soup = BeautifulSoup(response.text, 'html.parser')
-        
-        # 獲取網頁標題
-        #title = soup.title.string
-        #print(f"網頁標題: {title}")
-
-        # 獲取所有段落內容
-        paragraphs = soup.find_all('span')
-        for idx, paragraph in enumerate(paragraphs):
-            if idx == 8:
-                population = paragraph.get_text()
-                return population
+        return
+    else:
+        print(response.status_code)
+        return
 
 
 # 監聽所有來自 /callback 的 Post Request
@@ -57,8 +48,7 @@ def handle_message(event):
     #echo
     msg = event.message.text
     if (msg in msg_list):
-        re = f"目前健身房人數: {crawl_gym ()} 人"
-        message = TextSendMessage(text = re)
+        message = TextSendMessage(original_content_url='https://www.cwa.gov.tw/Data/fcst_img/FI04.png',preview_image_url='https://www.cwa.gov.tw/Data/fcst_img/FI04.png')
         line_bot_api.reply_message(event.reply_token,message)
     return
     
