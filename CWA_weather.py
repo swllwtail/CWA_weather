@@ -12,22 +12,6 @@ msg_list = ['Weather ','weather','weather ','天氣圖','map','Map ']
 line_bot_api = LineBotApi(os.environ['CHANNEL_ACCESS_TOKEN'])
 handler = WebhookHandler(os.environ['CHANNEL_SECRET'])
 
-def crawl_CWA ():
-
-    # 設定要爬取的網址
-    url = 'https://www.cwa.gov.tw/Data/fcst_img/FI04.png'  # 替換成你想要爬取的網址
-
-    # 發送 GET 請求
-    response = requests.get(url)
-
-    # 確認請求是否成功
-    if response.status_code == 200:
-        return
-    else:
-        print(response.status_code)
-        return
-
-
 # 監聽所有來自 /callback 的 Post Request
 @app.route("/callback", methods=['POST'])
 def callback():
