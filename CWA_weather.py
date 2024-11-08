@@ -12,6 +12,12 @@ msg_list = ['Weather ','weather','weather ','天氣圖','map','Map ']
 line_bot_api = LineBotApi(os.environ['CHANNEL_ACCESS_TOKEN'])
 handler = WebhookHandler(os.environ['CHANNEL_SECRET'])
 
+def scratch_CWA ():
+    image_url = "https://www.cwa.gov.tw/Data/fcst_img/FI04.png"
+    response = requests.get(image_url)
+    if response.status_code == 200:
+        return response.content
+    
 # 監聽所有來自 /callback 的 Post Request
 @app.route("/callback", methods=['POST'])
 def callback():
@@ -32,7 +38,7 @@ def handle_message(event):
     #echo
     msg = event.message.text
     if (msg in msg_list):
-        message = TextSendMessage(original_content_url='https://www.cwa.gov.tw/Data/fcst_img/FI04.png',preview_image_url='https://www.cwa.gov.tw/Data/fcst_img/FI04.png')
+        message = TextSendMessage(original_content_url=scratch_CWA(),preview_image_url=scratch_CWA())
         line_bot_api.reply_message(event.reply_token,message)
     return
     
